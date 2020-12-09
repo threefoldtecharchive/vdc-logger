@@ -276,66 +276,6 @@ dashboard_json = """
         "align": false,
         "alignLevel": null
       }
-    },
-    {
-      "datasource": "InfluxDB",
-      "fieldConfig": {
-        "defaults": {
-          "custom": {}
-        },
-        "overrides": []
-      },
-      "gridPos": {
-        "h": 8,
-        "w": 12,
-        "x": 12,
-        "y": 8
-      },
-      "id": 8,
-      "options": {
-        "showLabels": false,
-        "showTime": false,
-        "sortOrder": "Descending",
-        "wrapLogMessage": false
-      },
-      "pluginVersion": "7.3.4",
-      "targets": [
-        {
-          "groupBy": [],
-          "measurement": "logs",
-          "orderByTime": "ASC",
-          "policy": "default",
-          "refId": "A",
-          "resultFormat": "logs",
-          "select": [
-            [
-              {
-                "params": [
-                  "message"
-                ],
-                "type": "field"
-              }
-            ]
-          ],
-          "tags": [
-            {
-              "key": "vdc_name",
-              "operator": "=",
-              "value": "{vdcname}-trc"
-            },
-            {
-              "condition": "AND",
-              "key": "tname",
-              "operator": "=",
-              "value": "{tname}"
-            }
-          ]
-        }
-      ],
-      "timeFrom": null,
-      "timeShift": null,
-      "title": "TRC logs",
-      "type": "logs"
     }
   ],
   "schemaVersion": 26,
