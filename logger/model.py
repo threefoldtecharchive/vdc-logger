@@ -1,6 +1,10 @@
 from .db import get_db
 from .exceptions import MissingValueException
 import binascii
+from flask import current_app
+from .dashboard import get_dashboard_json
+import json
+import requests
 
 def insert_alert(json_data):
     # vdc_name, app_name, status, category, message, level, last_occurance
@@ -98,3 +102,14 @@ def cache_verify_key(customer_tid, explorer_url, verify_key):
         },
     ]
     client.write_points(points)
+
+
+def add_new_dashboard(json_data):
+    token = current_app.config["GRAFANA_KEY"]
+    tname = json_data.get('tname')
+    vdc_name = json_data.get('vdc_name')
+    if tname is None or vdc_name is None:
+        raise MissingValueException("some properties are not provided")
+    dashboard_str = get_dashboard_json(tname, vdc_name)
+    hed = {'Authorization': 'Bearer ' + token}
+    requests.post("http://localhost:3000/api/dashboards/db", json=json.loads(dashboard_str), headers=hed)

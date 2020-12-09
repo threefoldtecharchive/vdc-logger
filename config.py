@@ -1,0 +1,4 @@
+INFLUXDB_USERNAME = "user"
+INFLUXDB_PASSWORD = "password"
+REDIS_PORT = 6379
+REDIS_PASSWORD = "password"

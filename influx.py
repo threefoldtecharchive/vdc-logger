@@ -1,8 +1,9 @@
 from influxdb import InfluxDBClient
+import config
 
 def connect_influx():
     # You can generate a Token from the "Tokens Tab" in the UI
-    client = InfluxDBClient(host='localhost', port=8086, username='omar', password='omar')
+    client = InfluxDBClient(host='localhost', port=8086, username=config.INFLUXDB_USERNAME, password=config.INFLUXDB_PASSWORD)
     client.switch_database('logs')
     return client
 
