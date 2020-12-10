@@ -1,0 +1,14 @@
+[Unit]
+Description=tf_caddy_server
+After=tf-logging-server.service 
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=120
+User=root
+WorkingDirectory=/root/vdc-logger
+ExecStart=/usr/bin/caddy  run -config Caddyfile
+
+[Install]
+WantedBy=multi-user.target

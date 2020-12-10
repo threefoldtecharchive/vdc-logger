@@ -1,0 +1,9 @@
+LOCAL_HOST
+route /api/* {
+  uri strip_prefix /api
+  reverse_proxy localhost:8000
+}
+
+route /* {
+  reverse_proxy localhost:3000
+}

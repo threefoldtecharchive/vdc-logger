@@ -39,8 +39,13 @@ cd vdc-logger
 # Move our redis service to the systemd services
 cp services/tf-redis-listener.service /etc/systemd/system
 cp services/tf-logging-server.service /etc/systemd/system
+cp services/tf-caddy-server.service /etc/systemd/system
+
+# Update the Caddy service with the domain
+sed -i 's/LOCAL_HOST/$1/g' Caddyfile
 
 # Reload and start the services
 systemctl daemon-reload
 systemctl start tf-redis-listener.service
 systemctl start tf-logging-server.service
+systemctl start tf-caddy-server.service
