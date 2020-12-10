@@ -32,7 +32,7 @@ echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \  | sudo tee -a /etc/apt/
 apt update
 apt install caddy -y
 
-# git clone https://github.com/OmarElawady/vdc-logger.git
+git clone -b development_guni https://github.com/OmarElawady/vdc-logger.git
 pip3 install -r vdc-logger/requirements.txt
 cd vdc-logger
 
