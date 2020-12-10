@@ -32,6 +32,9 @@ echo "deb [trusted=yes] https://apt.fury.io/caddy/ /" \  | sudo tee -a /etc/apt/
 apt update
 apt install caddy -y
 
+systemctl stop caddy.service
+systemctl disable caddy.service
+
 git clone -b development_guni https://github.com/OmarElawady/vdc-logger.git
 pip3 install -r vdc-logger/requirements.txt
 cd vdc-logger
