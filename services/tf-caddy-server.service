@@ -5,7 +5,7 @@ StartLimitIntervalSec=0
 [Service]
 Type=simple
 Restart=always
-RestartSec=120
+RestartSec=1
 User=root
 WorkingDirectory=/root/vdc-logger
 ExecStart=/usr/bin/caddy  run -config Caddyfile
