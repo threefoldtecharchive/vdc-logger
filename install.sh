@@ -45,6 +45,11 @@ apt install caddy -y
 systemctl stop caddy.service
 systemctl disable caddy.service
 
+# Create Influx database
+influx -execute 'CREATE  DATABASE verify_keys'
+influx -execute 'CREATE  DATABASE alerts'
+influx -execute 'CREATE  DATABASE logs'
+
 # Move our redis service to the systemd services
 cp services/tf-redis-listener.service /etc/systemd/system
 cp services/tf-logging-server.service /etc/systemd/system
