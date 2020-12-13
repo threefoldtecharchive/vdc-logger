@@ -32,6 +32,15 @@ After running the previous command, you will get:
 - [Caddy](https://caddyserver.com/) server to issue https certificate and serve our endpoints on `/api` and [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started/) server on `/`
 
 
+### After Installation
+- `Grafana` will be available on: `<DOMAIN_NAME>`
+- `API` endpoints will be available on: `<DOMAIN_NAME>/api/<END_POINT>`
+
+#### Available endpoints
+- `/api/register`
+- `/api/heartbeat`
+- `/api/alert`
+
 ### Enabling VDC 3bot monitoring 
 Add these configurations to your 3bot
 
