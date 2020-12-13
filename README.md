@@ -30,3 +30,13 @@ After running the previous command, you will get:
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) running in production using [gunicorn](https://gunicorn.org/)
 - `redislistener` process to get the logs
 - [Caddy](https://caddyserver.com/) server to issue https certificate and serve our endpoints on `/api` and [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started/) server on `/`
+
+
+### Enabling VDC 3bot monitoring 
+Add these configurations to your 3bot
+
+```python  
+redis_config = {"channel_type":"redis","channel_host":"<DOMAIN_NAME>","channel_port":"6379"}                                                            
+j.config.set("VDC_LOG_CONFIG",redis_config)    
+j.config.set("MONITORING_SERVER_URL","<DOMAIN_NAME>:5000/")
+```
