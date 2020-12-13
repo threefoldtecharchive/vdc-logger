@@ -22,6 +22,7 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
 apt-get update
 apt-get install git python3-pip redis-server influxdb -y
 sed -i 's/supervised no/supervised systemd/g' /etc/redis/redis.conf
+sed -i 's/bind 127.0.0.1 ::1/bind 0.0.0.0 ::1/g' /etc/redis/redis.conf
 systemctl restart redis.service
 systemctl unmask influxdb.service
 systemctl start influxdb
