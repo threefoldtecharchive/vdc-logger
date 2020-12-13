@@ -12,9 +12,15 @@ This will help adminstration team to monitor the running 3bots for our clients
 
 
 ### Installation
+- Get `install.sh` bash file and run 
 
-- Run 
-`bash install.sh <DOMAIN_NAME>`
+```
+sudo apt-get install curl -y
+
+curl -Lo install.sh https://raw.githubusercontent.com/OmarElawady/vdc-logger/development_guni/install.sh  
+
+bash install.sh <DOMAIN_NAME>
+```
 
 After running the previous command, you will get:
 
