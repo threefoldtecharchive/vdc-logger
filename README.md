@@ -1,11 +1,26 @@
-TODO:
-1. Add authentication to redis
-2. Make an endpoint for the vdc to create a dashboard for it in grafana
-3. add init-db command line to initialize the databases used by the server
+### Introduction 
+A monitoring solution for VDC's 3bots, provides:
 
-Installaion:
-1. install and run redis server
-2. Install and run inflluxdb
-3. make databases keys, logs, and alerts
-4. run flask (now in development mode)
-5. run the redislistener process
+- Monitoring 
+    - Logs
+    - Alerts 
+    - Heartbeats
+
+- Real time visualization using [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started/) 
+
+This will help adminstration team to monitor the running 3bots for our clients
+
+
+### Installation
+
+- Run 
+`bash install.sh <DOMAIN_NAME>`
+
+After running the previous command, you will get:
+
+- [redis server](https://redis.io/)
+- [influxdb](https://www.influxdata.com/)
+- [Grafana server](https://grafana.com/docs/grafana/latest/getting-started/getting-started/)
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/) running in production using [gunicorn](https://gunicorn.org/)
+- `redislistener` process to get the logs
+- [Caddy](https://caddyserver.com/) server to issue https certificate and serve our endpoints on `/api` and [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started/) server on `/`
