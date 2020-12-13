@@ -8,7 +8,7 @@ Restart=always
 RestartSec=1
 User=root
 WorkingDirectory=/root/vdc-logger
-ExecStart=/usr/bin/caddy  run -config Caddyfile
+ExecStart=/usr/bin/caddy  run -config Caddyfile --log-level DEBUG
 
 [Install]
 WantedBy=multi-user.target
