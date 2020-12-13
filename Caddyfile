@@ -1,6 +1,6 @@
 LOCAL_HOST
-route /api/* {
-  uri strip_prefix /api
+route /3bot/api/* {
+  uri strip_prefix /3bot/api
   reverse_proxy localhost:8000
 }
 
