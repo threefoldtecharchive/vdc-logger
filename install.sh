@@ -31,6 +31,15 @@ git clone --progress --verbose -b development_guni https://github.com/OmarElawad
 
 cd vdc-logger
 
+# Get grafana token
+token=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"Main Org.", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
+
+# Replace token if it is not found
+count=$(cat config.py | sed -n "/\GRAFANA_API_KEY/p" | wc -l)
+if [ count -gt 0 ]; then
+    sed -i "s/GRAFANA_API_KEY/$token/g" logger/config.py
+fi
+
 # Update the Caddy service with the domain
 sed -i "s/LOCAL_HOST/$1/g" Caddyfile
 
