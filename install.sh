@@ -35,8 +35,8 @@ cd vdc-logger
 token=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"Main Org.", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
 
 # Replace token if it is not found
-count=$(cat config.py | sed -n "/\GRAFANA_API_KEY/p" | wc -l)
-if [ count -gt 0 ]; then
+count=$(cat logger/config.py | sed -n "/\GRAFANA_API_KEY/p" | wc -l)
+if [ $count -gt 0 ]; then
     sed -i "s/GRAFANA_API_KEY/$token/g" logger/config.py
 fi
 
@@ -58,6 +58,7 @@ systemctl disable caddy.service
 influx -execute 'CREATE  DATABASE verify_keys'
 influx -execute 'CREATE  DATABASE alerts'
 influx -execute 'CREATE  DATABASE logs'
+influx -execute 'CREATE  DATABASE heartbeats'
 
 # Move our redis service to the systemd services
 cp services/tf-redis-listener.service /etc/systemd/system
@@ -72,3 +73,6 @@ systemctl start tf-caddy-server.service
 systemctl enable tf-redis-listener.service
 systemctl enable tf-logging-server.service
 systemctl enable tf-caddy-server.service
+
+# Add Influx data source to Grafana data source
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJrIjoiQ2ZBaUJScUdrS3h4emIwTkVZekkxQ2RjbDlEaHJZc2IiLCJuIjoiTWFpbiBPcmcuIiwiaWQiOjF9" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources

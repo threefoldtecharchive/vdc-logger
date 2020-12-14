@@ -240,7 +240,7 @@ dashboard_json = """
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Hearbeats",
       "tooltip": {
         "shared": true,
         "sort": 0,
@@ -296,6 +296,7 @@ dashboard_json = """
 }
 }
 """
+
 
 def get_dashboard_json(tname, vdcname):
     x = dashboard_json
