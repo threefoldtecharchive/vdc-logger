@@ -75,4 +75,4 @@ systemctl enable tf-logging-server.service
 systemctl enable tf-caddy-server.service
 
 # Add Influx data source to Grafana data source
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer eyJrIjoiQ2ZBaUJScUdrS3h4emIwTkVZekkxQ2RjbDlEaHJZc2IiLCJuIjoiTWFpbiBPcmcuIiwiaWQiOjF9" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
