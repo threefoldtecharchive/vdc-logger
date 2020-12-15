@@ -31,13 +31,34 @@ git clone --progress --verbose -b development_guni https://github.com/OmarElawad
 
 cd vdc-logger
 
-# Get grafana token
-token=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"Main Org.", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
+# Add 3 orgs
+devId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"devnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
+testId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"testnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
+mainId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"devnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
+
+curl -X POST http://admin:admin@localhost:3000/api/user/using/$devId
+devtoken=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"devkey", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
+
+curl -X POST http://admin:admin@localhost:3000/api/user/using/$testId
+testtoken=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"testkey", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
+
+curl -X POST http://admin:admin@localhost:3000/api/user/using/$mainId
+maintoken=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"mainkey", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
 
 # Replace token if it is not found
-count=$(cat logger/config.py | sed -n "/\GRAFANA_API_KEY/p" | wc -l)
+count=$(cat logger/config.py | sed -n "/\GRAFANA_API_DEV_KEY/p" | wc -l)
 if [ $count -gt 0 ]; then
-    sed -i "s/GRAFANA_API_KEY/$token/g" logger/config.py
+    sed -i "s/GRAFANA_API_DEV_KEY/$devtoken/g" logger/config.py
+fi
+
+count=$(cat logger/config.py | sed -n "/\GRAFANA_API_TEST_KEY/p" | wc -l)
+if [ $count -gt 0 ]; then
+    sed -i "s/GRAFANA_API_TEST_KEY/$testtoken/g" logger/config.py
+fi
+
+count=$(cat logger/config.py | sed -n "/\GRAFANA_API_MAIN_KEY/p" | wc -l)
+if [ $count -gt 0 ]; then
+    sed -i "s/GRAFANA_API_MAIN_KEY/$maintoken/g" logger/config.py
 fi
 
 # Update the Caddy service with the domain
@@ -75,4 +96,6 @@ systemctl enable tf-logging-server.service
 systemctl enable tf-caddy-server.service
 
 # Add Influx data source to Grafana data source
-curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $token" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $devtoken" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $testtoken" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
+curl -X POST -H "Content-Type: application/json" -H "Authorization: Bearer $maintoken" -d '{"name":"InfluxDB","type":"influxdb","url":"http://localhost:8086","basicAuth":false,"message":"influx_db","access":"proxy","database":"logs","isDefault":true}' http://admin:admin@localhost:3000/api/datasources
