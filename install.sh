@@ -27,7 +27,7 @@ systemctl restart redis.service
 systemctl unmask influxdb.service
 systemctl start influxdb
 
-git clone --progress --verbose -b development_guni https://github.com/OmarElawady/vdc-logger.git
+git clone --progress --verbose -b main https://github.com/OmarElawady/vdc-logger.git
 
 cd vdc-logger
 

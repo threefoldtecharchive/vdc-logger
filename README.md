@@ -17,7 +17,7 @@ This will help adminstration team to monitor the running 3bots for our clients
 ```
 sudo apt-get install curl -y
 
-curl -Lo install.sh https://raw.githubusercontent.com/OmarElawady/vdc-logger/development_guni/install.sh  
+curl -Lo install.sh https://raw.githubusercontent.com/OmarElawady/vdc-logger/main/install.sh  
 
 bash install.sh <DOMAIN_NAME>
 ```
