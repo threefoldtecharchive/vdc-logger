@@ -34,7 +34,7 @@ cd vdc-logger
 # Add 3 orgs
 devId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"devnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
 testId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"testnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
-mainId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"devnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
+mainId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"mainnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
 
 curl -X POST http://admin:admin@localhost:3000/api/user/using/$devId
 devtoken=$(curl -X POST -H 'Content-Type: application/json' -d '{"name":"devkey", "role": "Admin"}' -s 'http://admin:admin@localhost:3000/api/auth/keys' | python3 -c "import sys, json; print(json.load(sys.stdin)['key'])")
