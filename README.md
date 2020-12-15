@@ -30,7 +30,10 @@ After running the previous command, you will get:
 - [Flask](https://flask.palletsprojects.com/en/1.1.x/) running in production using [gunicorn](https://gunicorn.org/)
 - `redislistener` process to get the logs
 - [Caddy](https://caddyserver.com/) server to issue https certificate and serve our endpoints on `/api` and [Grafana](https://grafana.com/docs/grafana/latest/getting-started/getting-started/) server on `/`
-
+- Our services running using `systemctl` service manager
+    - `tf-caddy-server.service` responsible for running `Caddy`
+    - `tf-loggin-server.service` responsible for running `gunicorn`
+    - `tf-redis-listern.service` responsible for running `redislistener`
 
 ### After Installation
 - `Grafana` will be available on: `<DOMAIN_NAME>`
