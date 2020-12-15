@@ -34,14 +34,6 @@ def get_verify_key_from_explorer(customer_tid, explorer_url):
     pub_key = unhexlify(requests.get(user_url).json()['pubkey'])    
     return pub_key
 
-def get_explorer_shortname(explorer_url):
-    if "test" in explorer_url:
-        return "test"
-    elif "dev" in explorer_url:
-        return "dev"
-    else:
-        return "main"
-
 def _encode_json(json_data):
     keys = ['tid', 'tname', 'timestamp', 'level', 'message', 'explorer_url', "vdc_name", "app_name", "status", "category", "type", "count"]
     b = StringIO()

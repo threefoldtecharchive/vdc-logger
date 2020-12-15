@@ -5,7 +5,7 @@ from flask import current_app
 from .dashboard import get_dashboard_json
 import json
 import requests
-from .helpers import get_explorer_shortname
+from .utils import get_explorer_shortname
 
 def insert_alert(json_data):
     # vdc_name, app_name, status, category, message, level, last_occurance
