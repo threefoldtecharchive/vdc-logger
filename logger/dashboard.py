@@ -258,7 +258,7 @@ dashboard_json = """
       "timeFrom": null,
       "timeRegions": [],
       "timeShift": null,
-      "title": "Panel Title",
+      "title": "Hearbeats",
       "tooltip": {
         "shared": true,
         "sort": 0,

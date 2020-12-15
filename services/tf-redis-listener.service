@@ -1,0 +1,14 @@
+[Unit]
+Description=Tf_redis_listen_service
+After=redis.service 
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/root/vdc-logger
+ExecStart=/usr/bin/python3  redislistener.py
+
+[Install]
+WantedBy=multi-user.target

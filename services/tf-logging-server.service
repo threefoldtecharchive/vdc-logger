@@ -1,0 +1,14 @@
+[Unit]
+Description=Tf_logging_server
+After=network.service
+StartLimitIntervalSec=0
+[Service]
+Type=simple
+Restart=always
+RestartSec=1
+User=root
+WorkingDirectory=/root/vdc-logger
+ExecStart=/usr/local/bin/gunicorn  -w 4 --bind 127.0.0.1:8000 "logger.my_project:create_app()" --log-level DEBUG
+
+[Install]
+WantedBy=multi-user.target

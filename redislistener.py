@@ -27,17 +27,17 @@ def process_message(message, db_connection):
     write_messages(db_connection, points)
 
 
-
-if __name__ == '__main__':
+if __name__ == "__main__":
     db_connection = connect_influx()
-    r = redis.Redis(host='localhost', port=int(config.REDIS_PORT), password=config.REDIS_PASSWORD, db=0)
+    r = redis.Redis(host="localhost", port=int(config.REDIS_PORT), db=0)
+    # r = redis.Redis(host="localhost", port=int(config.REDIS_PORT), password=config.REDIS_PASSWORD, db=0)
 
     p = r.pubsub()
     p.psubscribe('vdc_*_*_*-*') # edit to match vdc only
     while True:
         x = p.get_message()
         while x:
-            if x['type'] == 'pmessage':
+            if x["type"] == "pmessage":
                 process_message(x, db_connection)
                 print(x)
             x = p.get_message()

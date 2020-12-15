@@ -1,0 +1,9 @@
+LOCAL_HOST
+route /3bot/api/* {
+  uri strip_prefix /3bot/api
+  reverse_proxy localhost:8000
+}
+
+route /* {
+  reverse_proxy localhost:3000
+}
