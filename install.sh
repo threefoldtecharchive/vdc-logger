@@ -22,6 +22,8 @@ echo "deb https://repos.influxdata.com/${DISTRIB_ID,,} ${DISTRIB_CODENAME} stabl
 apt-get update
 apt-get install git python3-pip redis-server influxdb -y
 sed -i 's/supervised no/supervised systemd/g' /etc/redis/redis.conf
+[[ -z "$REDISPASSWORD" ]] || sed -i "s/# requirepass foobared/requirepass $REDISPASSWORD/g" /etc/redis/redis.conf
+[[ -z "$REDISPASSWORD" ]] || sed -i "s/REDIS_PASSWORD = None/REDIS_PASSWORD = \"$REDISPASSWORD\"/g" config.py
 sed -i 's/bind 127.0.0.1 ::1/bind 0.0.0.0 ::1/g' /etc/redis/redis.conf
 systemctl restart redis.service
 systemctl unmask influxdb.service

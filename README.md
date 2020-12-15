@@ -12,9 +12,12 @@ This will help adminstration team to monitor the running 3bots for our clients
 
 
 ### Installation
+- Set the `REDISPASSWORD` environment variable to be used as redis password.
 - Get `install.sh` bash file and run 
 
 ```
+export REDISPASSWORD=supersecret
+
 sudo apt-get install curl -y
 
 curl -Lo install.sh https://raw.githubusercontent.com/OmarElawady/vdc-logger/main/install.sh  
@@ -45,10 +48,10 @@ After running the previous command, you will get:
 - `/api/alert`
 
 ### Enabling VDC 3bot monitoring 
-Add these configurations to your 3bot
+Add these configurations to your 3bot, after replacing `supersecret` with the redis password you set earlier.
 
 ```python  
-redis_config = {"channel_type":"redis","channel_host":"<DOMAIN_NAME>","channel_port":"6379"}                                                            
+redis_config = {"channel_type":"redis","channel_host":":supersecret@<DOMAIN_NAME>","channel_port":"6379"}                                                            
 j.config.set("VDC_LOG_CONFIG",redis_config)    
 j.config.set("MONITORING_SERVER_URL","https://<DOMAIN_NAME>/3bot/api/")
 ```
