@@ -71,6 +71,12 @@ dashboard_json = """
               "key": "vdc_name",
               "operator": "=",
               "value": "{vdcname}"
+            },
+            {
+              "condition": "AND",
+              "key": "explorer",
+              "operator": "=",
+              "value": "{explorer}"
             }
           ]
         }
@@ -131,6 +137,12 @@ dashboard_json = """
               "key": "vdc_name",
               "operator": "=",
               "value": "{vdcname}"
+            },
+            {
+              "condition": "AND",
+              "key": "explorer",
+              "operator": "=",
+              "value": "{explorer}"
             }
           ]
         }
@@ -232,6 +244,12 @@ dashboard_json = """
               "key": "tname",
               "operator": "=",
               "value": "{tname}"
+            },
+            {
+              "condition": "AND",
+              "key": "explorer",
+              "operator": "=",
+              "value": "{explorer}"
             }
           ]
         }
@@ -297,8 +315,9 @@ dashboard_json = """
 }
 """
 
-def get_dashboard_json(tname, vdcname):
+def get_dashboard_json(tname, vdcname, explorer):
     x = dashboard_json
     x = x.replace("{tname}", tname)
     x = x.replace("{vdcname}", vdcname)
+    x = x.replace("{explorer}", explorer)
     return x

@@ -5,4 +5,8 @@ DB_PASSWORD = 'password'
 REDIS_PASSWORD = 'password'
 SECRET_KEY = 'supersecret'
 GRAFANA_KEY = "grafana_key"
-
+GRAFANA_KEYS = {
+        "dev": "",
+        "test": "",
+        "main": ""
+}

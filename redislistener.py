@@ -8,15 +8,16 @@ def process_message(message, db_connection):
     channel = message.get('channel').decode()
     message_data = message.get('data').decode()
     can = channel[4:] 
-    vdc_name, rest = can.split('_', 1)
-    tname, stream = rest.rsplit('-', 1)
+    vdc_name, tname, rest = can.split('_', 2)
+    explorer, stream = rest.rsplit('-', 1)
     points = [
         {
             "measurement": "logs",
             "tags": {
                 "tname": tname,
                 "vdc_name": vdc_name,
-                "stream": stream
+                "explorer": explorer,
+                "stream": stream,
             },
             "fields": {  
                 "message": message_data
@@ -32,7 +33,7 @@ if __name__ == '__main__':
     r = redis.Redis(host='localhost', port=int(config.REDIS_PORT), password=config.REDIS_PASSWORD, db=0)
 
     p = r.pubsub()
-    p.psubscribe('vdc_*_*-*') # edit to match vdc only
+    p.psubscribe('vdc_*_*_*-*') # edit to match vdc only
     while True:
         x = p.get_message()
         while x:
