@@ -42,6 +42,8 @@ After running the previous command, you will get:
 - `Grafana` will be available on: `<DOMAIN_NAME>`
 - `API` endpoints will be available on: `<DOMAIN_NAME>/api/<END_POINT>`
 
+Note: You can login to grafana with `admin` as user and pass. MAke sure to change it.
+
 #### Available endpoints
 - `/api/register`
 - `/api/heartbeat`
