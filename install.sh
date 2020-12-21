@@ -23,15 +23,15 @@ apt-get update
 apt-get install git python3-pip redis-server influxdb -y
 sed -i 's/supervised no/supervised systemd/g' /etc/redis/redis.conf
 [[ -z "$REDISPASSWORD" ]] || sed -i "s/# requirepass foobared/requirepass $REDISPASSWORD/g" /etc/redis/redis.conf
-[[ -z "$REDISPASSWORD" ]] || sed -i "s/REDIS_PASSWORD = None/REDIS_PASSWORD = \"$REDISPASSWORD\"/g" config.py
 sed -i 's/bind 127.0.0.1 ::1/bind 0.0.0.0 ::1/g' /etc/redis/redis.conf
 systemctl restart redis.service
 systemctl unmask influxdb.service
 systemctl start influxdb
 
-git clone --progress --verbose -b main https://github.com/OmarElawady/vdc-logger.git
+git clone --progress --verbose -b main https://github.com/threefoldtech/vdc-logger.git
 
 cd vdc-logger
+[[ -z "$REDISPASSWORD" ]] || sed -i "s/REDIS_PASSWORD = None/REDIS_PASSWORD = \"$REDISPASSWORD\"/g" config.py
 
 # Add 3 orgs
 devId=$(curl -X POST -H "Content-Type: application/json" -d '{"name":"devnet"}' http://admin:admin@localhost:3000/api/orgs | python3 -c "import sys, json; print(json.load(sys.stdin)['orgId'])")
