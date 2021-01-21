@@ -1,5 +1,5 @@
 from .db import get_db
-from .exceptions import MissingValueException
+from .exceptions import MissingValueException, RegisteringDashboardException
 import binascii
 from flask import current_app
 from .dashboard import get_dashboard_json
@@ -83,12 +83,12 @@ def get_verify_key_from_db(customer_tid, explorer_url):
     customer_tid = int(customer_tid)
     client = get_db()
     client.switch_database("verify_keys")
-    results = client.query("SELECT pubkey, tid, explorer_url FROM verify_keys")
-    vals = results.get_points(tags={"tid": str(customer_tid), "explorer_url": explorer_url})
+    results = client.query(f"SELECT pubkey FROM verify_keys where tid='{customer_tid}' and explorer_url='{explorer_url}'")
+    vals = results.get_points()
     try:
         key = next(vals)
-        return binascii.unhexlify(key)
-    except:
+        return binascii.unhexlify(key['pubkey'])
+    except StopIteration:
         return None
 
 
@@ -117,4 +117,9 @@ def add_new_dashboard(json_data):
     token = current_app.config["GRAFANA_KEYS"][explorer]
     dashboard_str = get_dashboard_json(tname, vdc_name, explorer)
     hed = {'Authorization': 'Bearer ' + token}
-    requests.post("http://localhost:3000/api/dashboards/db", json=json.loads(dashboard_str), headers=hed)
+    print("Sending an api request for grafana to create the dashboard")
+    r = requests.post("http://localhost:3000/api/dashboards/db", json=json.loads(dashboard_str), headers=hed)
+    if r.status_code < 200 or r.status_code >= 300:
+        raise RegisteringDashboardException(f"Dashboard registeration failed: code {r.status_code}, json response: {r.json()}")
+    else:
+        print("Dashboard registeration completed successfully")
