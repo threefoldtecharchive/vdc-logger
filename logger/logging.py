@@ -3,7 +3,7 @@ from flask import Blueprint
 from flask import jsonify
 from .model import insert_heartbeat, insert_alert, add_new_dashboard
 from .helpers import verify_request
-from .exceptions import MissingValueException
+from .exceptions import MissingValueException, RegisteringDashboardException
 from nacl.exceptions import BadSignatureError
 import binascii
 
@@ -99,6 +99,9 @@ def register():
     except MissingValueException as e:
         err = {'error': str(e)}
         code = 400
+    except RegisteringDashboardException as e:
+        err = {'error': str(e)}
+        code = 500
     except Exception as e:
         err = {'error': str(e)}
         code = 500
